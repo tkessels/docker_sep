@@ -34,6 +34,9 @@ case "${1}" in
   tag )
     cat /root/tag
     ;;
+  config )
+    cat /root/sep_config
+    ;;
   debug )
     echo "stage: ${1}"
     /bin/bash
