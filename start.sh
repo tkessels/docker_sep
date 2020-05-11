@@ -1,8 +1,19 @@
 #!/bin/bash
+function config() {
+  echo "Changing Config for Manualscan"
+  key='\Symantec Endpoint Protection\AV\LocalScans\ManualScan'
+  cmd='/opt/Symantec/symantec_antivirus/symcfg'
+  #Setting AntivirusAction to NotifyOnly
+  ${cmd} add -k "${key}" -v FirstAction -d 0 -t 'REG_DWORD'
+  ${cmd} add -k "${key}" -v FirstMacroAction -d 0 -t 'REG_DWORD'
+  ${cmd} add -k "${key}" -v Checksum -d 1 -t 'REG_DWORD'
+}
+
 case "${1}" in
   shell )
     echo "stage: ${1}"
     service rtvscand start
+    (sleep 5 ; config)&
     echo "Usage:"
     echo "sav manualscan -c <file>"
     /bin/bash
@@ -23,12 +34,12 @@ case "${1}" in
     echo "Dockertag: ${docker_tag}"
     echo "Java Version:"
     java -version
-
     ;;
   scan )
     echo "stage: ${1}"
     service rtvscand start
     sleep 5
+    config
     sav manualscan -c /data
     ;;
   tag )

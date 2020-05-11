@@ -3,10 +3,11 @@ echo "Starting Liveupdate"
 sav liveupdate -u
 echo "Done with Liveupdate"
 echo "Changing Config for Manualscan"
-${cmd} -r list | tee /root/sep_config.old
 key='\Symantec Endpoint Protection\AV\LocalScans\ManualScan'
 cmd='/opt/Symantec/symantec_antivirus/symcfg'
-#Setting AntivirusAction to just
+
+${cmd} -r list | tee /root/sep_config.default
+#Setting AntivirusAction to NotifyOnly
 ${cmd} add -k "${key}" -v FirstAction -d 0 -t 'REG_DWORD'
 ${cmd} add -k "${key}" -v FirstMacroAction -d 0 -t 'REG_DWORD'
 ${cmd} add -k "${key}" -v Checksum -d 1 -t 'REG_DWORD'
