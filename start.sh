@@ -32,8 +32,6 @@ case "${1}" in
     echo "Virusdefinition: ${sep_dev}"
     echo "Productversion: ${sep_vers}"
     echo "Dockertag: ${docker_tag}"
-    echo "Java Version:"
-    java -version
     ;;
   scan )
     echo "stage: ${1}"
